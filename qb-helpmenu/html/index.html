@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QB Help Menu</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div id="help-menu" class="hidden">
+        <div class="help-container">
+            <div class="help-header">
+                <h1><i class="fas fa-question-circle"></i> Help Menu</h1>
+                <div class="header-controls">
+                    <div class="quick-actions">
+                        <button class="action-btn" data-action="copy" title="Copy to clipboard">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                        <button class="action-btn" data-action="print" title="Print help content">
+                            <i class="fas fa-print"></i>
+                        </button>
+                        <button class="action-btn" data-action="bookmark" title="Bookmark this section">
+                            <i class="fas fa-bookmark"></i>
+                        </button>
+                        <button class="action-btn" data-action="favorites" title="View favorites">
+                            <i class="fas fa-star"></i>
+                        </button>
+                        <button class="action-btn" data-action="history" title="Command history">
+                            <i class="fas fa-history"></i>
+                        </button>
+                        <button class="action-btn" data-action="shortcuts" title="Command shortcuts">
+                            <i class="fas fa-bolt"></i>
+                        </button>
+                    </div>
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="search-input" placeholder="Search help topics... (Press / to focus)">
+                    </div>
+                    <button id="close-btn" title="Close menu (ESC)"><i class="fas fa-times"></i></button>
+                </div>
+            </div>
+            <div class="help-tabs">
+                <button class="tab-btn active" data-tab="all">All</button>
+                <!-- Tabs will be dynamically populated -->
+            </div>
+            <div class="help-content">
+                <!-- Content will be dynamically populated -->
+            </div>
+            <div class="help-footer">
+                <div class="keyboard-shortcuts">
+                    <span class="key-hint"><i class="fas fa-keyboard"></i> Press ESC to close</span>
+                    <span class="key-hint"><i class="fas fa-search"></i> Press / to search</span>
+                    <span class="key-hint"><i class="fas fa-arrow-right"></i> Use arrow keys to navigate</span>
+                    <span class="key-hint"><i class="fas fa-star"></i> Press F to favorite</span>
+                    <span class="key-hint"><i class="fas fa-bolt"></i> Press S for shortcuts</span>
+                </div>
+                <div class="footer-right">
+                    <button class="theme-toggle" title="Toggle dark/light theme">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <span class="version">v1.0.0</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Shortcuts Panel -->
+        <div id="shortcuts-panel" class="side-panel">
+            <div class="panel-header">
+                <h2><i class="fas fa-bolt"></i> Command Shortcuts</h2>
+                <button class="close-panel"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="panel-content">
+                <div class="shortcuts-header">
+                    <button class="shortcut-tab active" data-tab="aliases">Aliases</button>
+                    <button class="shortcut-tab" data-tab="combinations">Combinations</button>
+                    <button class="shortcut-tab" data-tab="macros">Macros</button>
+                </div>
+                <div class="shortcuts-content">
+                    <!-- Aliases Section -->
+                    <div class="shortcut-section active" id="aliases-section">
+                        <div class="section-header">
+                            <h3>Command Aliases</h3>
+                            <button class="add-shortcut" data-type="alias">
+                                <i class="fas fa-plus"></i> Add Alias
+                            </button>
+                        </div>
+                        <div class="shortcuts-list">
+                            <!-- Aliases will be dynamically populated -->
+                        </div>
+                    </div>
+
+                    <!-- Combinations Section -->
+                    <div class="shortcut-section" id="combinations-section">
+                        <div class="section-header">
+                            <h3>Command Combinations</h3>
+                            <button class="add-shortcut" data-type="combination">
+                                <i class="fas fa-plus"></i> Add Combination
+                            </button>
+                        </div>
+                        <div class="shortcuts-list">
+                            <!-- Combinations will be dynamically populated -->
+                        </div>
+                    </div>
+
+                    <!-- Macros Section -->
+                    <div class="shortcut-section" id="macros-section">
+                        <div class="section-header">
+                            <h3>Command Macros</h3>
+                            <button class="add-shortcut" data-type="macro">
+                                <i class="fas fa-plus"></i> Add Macro
+                            </button>
+                        </div>
+                        <div class="shortcuts-list">
+                            <!-- Macros will be dynamically populated -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Shortcut Modal -->
+        <div id="add-shortcut-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Add New Shortcut</h3>
+                    <button class="close-modal"><i class="fas fa-times"></i></button>
+                </div>
+                <div class="modal-body">
+                    <form id="shortcut-form">
+                        <div class="form-group">
+                            <label for="shortcut-name">Shortcut Name</label>
+                            <input type="text" id="shortcut-name" placeholder="Enter shortcut name">
+                        </div>
+                        <div class="form-group">
+                            <label for="shortcut-command">Command</label>
+                            <input type="text" id="shortcut-command" placeholder="Enter command">
+                        </div>
+                        <div class="form-group">
+                            <label for="shortcut-description">Description</label>
+                            <textarea id="shortcut-description" placeholder="Enter description"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="shortcut-key">Keyboard Shortcut (Optional)</label>
+                            <input type="text" id="shortcut-key" placeholder="Press keys for shortcut" readonly>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn-primary">Save Shortcut</button>
+                            <button type="button" class="btn-secondary close-modal">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Favorites Panel -->
+        <div id="favorites-panel" class="side-panel">
+            <div class="panel-header">
+                <h2><i class="fas fa-star"></i> Favorites</h2>
+                <button class="close-panel"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="panel-content">
+                <!-- Favorites will be dynamically populated -->
+            </div>
+        </div>
+
+        <!-- History Panel -->
+        <div id="history-panel" class="side-panel">
+            <div class="panel-header">
+                <h2><i class="fas fa-history"></i> Command History</h2>
+                <button class="close-panel"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="panel-content">
+                <!-- History will be dynamically populated -->
+            </div>
+        </div>
+
+        <div id="tooltip" class="tooltip"></div>
+        <div id="notification" class="notification"></div>
+    </div>
+    <script src="js/script.js"></script>
+</body>
+</html> 
