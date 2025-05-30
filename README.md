@@ -24,7 +24,7 @@ Built with a focus on professionalism and user experience, this resource offers 
 -   📋/🖨️ **Copy/Print Content:** Easily copy help content to clipboard or print it.
 -   🤝 **NUI Callbacks:** Built with NUI callbacks for seamless communication between client and UI.
 -   💾 **Database Integration:** Tracks player join times and language preferences (requires `oxmysql`).
-
+![image](https://github.com/user-attachments/assets/eac5f2db-4270-4758-a712-121f5bc9e82e)
 ---
 
 ## 🛠️ Setup Guide
