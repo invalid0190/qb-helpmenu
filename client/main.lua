@@ -111,7 +111,14 @@ function ShowHelpMenu()
         helpText = GetRoleBasedContent(),
         currentLanguage = currentLanguage,
         availableLanguages = Config.AvailableLanguages,
-        languageSettings = Config.LanguageSelection
+        languageSettings = Config.LanguageSelection,
+        configSettings = {
+            enableHistory = Config.EnableHistory,
+            enableFavorites = Config.EnableBookmarks,
+            enableShortcuts = Config.EnableShortcuts,
+            enableQuickActions = Config.EnableQuickActions,
+            quickActions = Config.QuickActions
+        }
     })
 end
 
@@ -135,7 +142,7 @@ local function CheckFirstJoin()
             ShowHelpMenu()
         else
             -- Check if it's been more than Config.DaysThreshold days
-            local currentTime = os.time()
+            local currentTime = GetGameTimer() / 1000 -- Convert to seconds
             local daysSinceLastJoin = math.floor((currentTime - lastJoin) / (24 * 60 * 60))
             
             if daysSinceLastJoin >= Config.DaysThreshold then

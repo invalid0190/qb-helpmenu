@@ -10,6 +10,7 @@ let notification = document.getElementById('notification');
 let themeToggle = document.querySelector('.theme-toggle');
 let bookmarkedSections = new Set();
 let currentLanguage = 'en';
+let configSettings = {}; // Global variable to store config settings
 
 // Shortcuts System
 let shortcuts = {
@@ -57,6 +58,13 @@ function hideTooltip() {
 document.querySelectorAll('.action-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
         const action = e.currentTarget.dataset.action;
+        
+        // Check if action is enabled in config
+        if (action === 'history' && !configSettings.enableHistory) return;
+        // Assuming similar config for favorites and shortcuts
+        if (action === 'favorites' && !configSettings.enableFavorites) return;
+        if (action === 'shortcuts' && !configSettings.enableShortcuts) return;
+
         switch(action) {
             case 'copy':
                 copyContent();
@@ -66,6 +74,15 @@ document.querySelectorAll('.action-btn').forEach(btn => {
                 break;
             case 'bookmark':
                 toggleBookmark();
+                break;
+            case 'favorites':
+                toggleSidePanel('favorites-panel');
+                break;
+            case 'history':
+                toggleSidePanel('history-panel');
+                break;
+            case 'shortcuts':
+                toggleSidePanel('shortcuts-panel');
                 break;
         }
     });
@@ -255,6 +272,7 @@ window.addEventListener('message', (event) => {
         helpMenu.classList.remove('hidden');
         helpData = data.helpText;
         currentLanguage = data.currentLanguage;
+        configSettings = data.configSettings || {}; // Store received config settings
         
         // Update language selector if it exists
         const languageSelect = document.getElementById('language-select');
@@ -262,6 +280,14 @@ window.addEventListener('message', (event) => {
             languageSelect.value = currentLanguage;
         }
         
+        // Handle visibility of quick action buttons based on config
+        document.querySelector('[data-action="copy"]').style.display = configSettings.enableQuickActions && configSettings.quickActions?.copy ? 'flex' : 'none';
+        document.querySelector('[data-action="print"]').style.display = configSettings.enableQuickActions && configSettings.quickActions?.print ? 'flex' : 'none';
+        document.querySelector('[data-action="bookmark"]').style.display = configSettings.enableQuickActions && configSettings.quickActions?.bookmark ? 'flex' : 'none';
+        document.querySelector('[data-action="favorites"]').style.display = configSettings.enableFavorites ? 'flex' : 'none';
+        document.querySelector('[data-action="history"]').style.display = configSettings.enableHistory ? 'flex' : 'none';
+        document.querySelector('[data-action="shortcuts"]').style.display = configSettings.enableShortcuts ? 'flex' : 'none';
+
         createTabs(helpData);
         updateHelpContent(helpData);
     } else if (data.type === 'hideHelpMenu') {
@@ -577,4 +603,54 @@ function initializeLanguageSelector() {
 document.addEventListener('DOMContentLoaded', () => {
     initializeShortcuts();
     initializeLanguageSelector();
+});
+
+// Add function to toggle side panels
+function toggleSidePanel(panelId) {
+    const panel = document.getElementById(panelId);
+    if (panel) {
+        // Close other open panels
+        document.querySelectorAll('.side-panel.show').forEach(openPanel => {
+            if (openPanel.id !== panelId) {
+                openPanel.classList.remove('show');
+            }
+        });
+        panel.classList.toggle('show');
+    }
+}
+
+// Add event listeners to close side panels
+document.querySelectorAll('.side-panel .close-panel').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        e.target.closest('.side-panel').classList.remove('show');
+    });
+});
+
+// Close panels when clicking outside
+document.addEventListener('click', (e) => {
+    if (!e.target.closest('.side-panel') && !e.target.closest('.action-btn') && document.querySelector('.side-panel.show')) {
+        document.querySelectorAll('.side-panel').forEach(panel => panel.classList.remove('show'));
+    }
+});
+
+// Prevent clicks inside panels from closing them
+document.querySelectorAll('.side-panel').forEach(panel => {
+    panel.addEventListener('click', (e) => {
+        e.stopPropagation();
+    });
+});
+
+// Prevent clicks inside quick actions from closing panels
+document.querySelector('.quick-actions').addEventListener('click', (e) => {
+    e.stopPropagation();
+});
+
+// Prevent clicks inside search box from closing panels
+document.querySelector('.search-box').addEventListener('click', (e) => {
+    e.stopPropagation();
+});
+
+// Prevent clicks inside tabs from closing panels
+document.querySelector('.help-tabs').addEventListener('click', (e) => {
+    e.stopPropagation();
 }); 

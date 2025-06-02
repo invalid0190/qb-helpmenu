@@ -59,7 +59,7 @@ Config.EnableBookmarks = true -- Enable bookmark functionality
 Config.MaxBookmarks = 10 -- Maximum number of bookmarks allowed
 
 -- History Settings
-Config.EnableHistory = true -- Enable command history
+Config.EnableHistory = false -- Enable/disable command history
 Config.MaxHistoryItems = 20 -- Maximum number of history items to store
 
 -- Quick Actions Settings
