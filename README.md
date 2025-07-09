@@ -4,11 +4,14 @@
 
 QB-HelpMenu is a modern and highly customizable in-game help menu designed for QBCore FiveM servers. It provides players with easy access to essential information, commands, and guides through a clean and responsive NUI interface. With support for role-based content, keyboard shortcuts, bookmarks, and more, QB-HelpMenu enhances player onboarding and helps users quickly find the information they need.
 
+Discord : https://discord.gg/9gswanHEX3
+
 Dark
 ![image](https://github.com/user-attachments/assets/850d0316-116e-4c42-9a36-ef768959b50c)
 
 Light 
 ![image](https://github.com/user-attachments/assets/83380658-ecb3-4607-8d33-7b26721332d5)
+
 
 
 ## 🔥 Key Features
